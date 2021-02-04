@@ -1,6 +1,17 @@
 let dominio = 'AB123CD';
 let datosAdicionales = "Solicito cedulas verdes y azules";
 
+function addButton(ele) {
+    let btn = document.createElement("button");
+    btn.innerHTML = "--AUTOLLENAR--";
+    btn.className = "fillBtn";
+    btn.onclick = () => {
+        main();
+    }
+    ele.insertBefore(document.createElement('br'), ele.childNodes[0]);
+    ele.insertBefore(btn, ele.childNodes[0]);
+}
+
 function URL_esCorrecta() {
     let string = location.href;
     let convertedString = string.toLowerCase();
@@ -39,38 +50,35 @@ function primerFormularioSuccess(dominio) {
     ingresarEntidad.value = "DNRPA";
 
     // 7
-    let botonContinuar = document.getElementById("btn-continuar");
-    botonContinuar.click();
-
-    // 8
-    let s = "Ingresaste el dominio: " + dominio + "\nVerificá que sea correcto."
-        + "\n\nSi es correcto apretá enter\nSi no es correcto, apretá ESC y volvé a empezar."; 
+    let s = "Ingresaste el dominio: " + dominio + "\nVerificá que sea correcto.";
     let confirmacion = confirm(s);
     if (!confirmacion) {
         console.log("no confirmado");
+        location.reload();
         return false;
     }
-    let botonConfirmar = document.getElementById("btn-confirm");
-    botonConfirmar.click();
+
+    let botonContinuar = document.getElementById("btn-continuar");
+    alert("si");
+    botonContinuar.click();
+
+    // 8
+    //let botonConfirmar = document.getElementById("btn-confirm");
+    //botonConfirmar.click();
 
     return true;
-}
-
-// backup
-function theDomHasLoaded(e) {
-    console.log("2. " + location.href);
 }
 
 function main() {
     if (!URL_esCorrecta()) return;
     if (!primerFormularioSuccess(dominio)) {
-        window.location = "https://certificadosonline.gob.gba.gob.ar/certificado/extravio/nuevo";
+        document.activeElement.blur();
+        alert("a");
+        //window.location = "https://certificadosonline.gob.gba.gob.ar/certificado/extravio/nuevo";
+        alert("b");
         return;
     }
-    
-    console.log("1. " + location.href);
-    document.addEventListener("DOMContentLoaded", theDomHasLoaded, false);
-
 }
 
-main();
+let asdf = document.getElementById("lbl-document");
+addButton(asdf);
